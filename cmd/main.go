@@ -1,11 +1,15 @@
 package main
 
 import (
+	"context"
 	machines_management_validaor_backend "github.com/bsydorenko7/machines-management-validator-backend"
 	"github.com/bsydorenko7/machines-management-validator-backend/pkg/handler"
 	"github.com/bsydorenko7/machines-management-validator-backend/pkg/service"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
@@ -19,8 +23,20 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	srv := new(machines_management_validaor_backend.Server)
-	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		logrus.Fatalf("error occured while running http server: %s", err.Error())
+	go func() {
+		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatalf("error occured while running http server: %s", err.Error())
+		}
+	}()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Info("Machines-management-validator-backend Shutting Down")
+
+	if err := srv.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error occured on server shutting down: %s", err.Error())
 	}
 }
 
