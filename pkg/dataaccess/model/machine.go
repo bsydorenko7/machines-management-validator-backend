@@ -1,6 +1,8 @@
 package model
 
+import "github.com/google/uuid"
+
 type Machine struct {
-	Id  string `json:"machine" binding:"required"`
-	Age string `json:"age" binding:"required"`
+	Id  uuid.UUID `json:"id" binding:"required"`
+	Age string    `json:"age" binding:"required"`
 }
