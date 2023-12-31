@@ -17,7 +17,7 @@ func NewMachineService() *MachineService {
 	return &MachineService{}
 }
 
-// validates machines using Extended Isolation Forest algorithm
+// validate machines using Extended Isolation Forest algorithm
 func (s *MachineService) ValidateMachines(machines []model.Machine) ([]model.Machine, error) {
 	var inputData [][]float64
 	var err error

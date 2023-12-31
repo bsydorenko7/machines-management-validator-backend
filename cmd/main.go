@@ -12,6 +12,13 @@ import (
 	"syscall"
 )
 
+// @title machines-management-validator-backend
+// @version 1.0
+// @description API Server for validation of machines-management
+
+// @host localhost:8080
+// @BasePath /
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 
