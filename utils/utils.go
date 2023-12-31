@@ -35,7 +35,7 @@ const (
 const (
 	DAYS_TO_HOURS_KEF   float64 = 24
 	WEEKS_TO_HOURS_KEF  float64 = 168  //24*7=168
-	MONTHS_TO_HOURS_KEF float64 = 720  //24*7=720
+	MONTHS_TO_HOURS_KEF float64 = 720  //24*30=720
 	YEARS_TO_HOURS_KEF  float64 = 8760 //24*365=8760
 )
 
