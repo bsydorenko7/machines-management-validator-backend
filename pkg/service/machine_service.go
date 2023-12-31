@@ -18,6 +18,7 @@ func NewMachineService() *MachineService {
 }
 
 // validate machines using Extended Isolation Forest algorithm
+// TODO Remove dublicate code
 func (s *MachineService) ValidateMachines(machines []model.Machine) ([]model.Machine, error) {
 	var inputData [][]float64
 	var err error
