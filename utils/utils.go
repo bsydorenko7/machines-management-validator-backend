@@ -8,66 +8,62 @@ import (
 	"time"
 )
 
-const SPACE string = " "
-
 const (
-	HUMAN_NANOSECONDS  string = "nanoseconds"
-	HUMAN_MICROSECONDS string = "microseconds"
-	HUMAN_MILISECONDS  string = "milliseconds"
-	HUMAN_SECONDS      string = "seconds"
-	HUMAN_MINUTES      string = "minutes"
-	HUMAN_HOURS        string = "hours"
-	HUMAN_DAYS         string = "days"
-	HUMAN_WEEKS        string = "weeks"
-	HUMAN_MONTHS       string = "months"
-	HUMAN_YEARS        string = "years"
-)
+	space string = " "
 
-const (
-	NANOSECONDS_UNIT_KEY   string = "ns"
-	MISCROSECONDS_UNIT_KEY string = "us"
-	MILISECONDS_UNIT_KEY   string = "ms"
-	SECONDS_UNIT_KEY       string = "s"
-	MINUTES_UNIT_KEY       string = "m"
-	HOURS_UNIT_KEY         string = "h"
-)
+	humanNanoseconds  string = "nanoseconds"
+	humanMicroseconds string = "microseconds"
+	humanMilliseconds string = "milliseconds"
+	humanSeconds      string = "seconds"
+	humanMinutes      string = "minutes"
+	humanHours        string = "hours"
+	humanDays         string = "days"
+	humanWeeks        string = "weeks"
+	humanMonths       string = "months"
+	humanYears        string = "years"
 
-const (
-	DAYS_TO_HOURS_KEF   float64 = 24
-	WEEKS_TO_HOURS_KEF  float64 = 168  //24*7=168
-	MONTHS_TO_HOURS_KEF float64 = 720  //24*30=720
-	YEARS_TO_HOURS_KEF  float64 = 8760 //24*365=8760
+	nanosecondsUnitKey  string = "ns"
+	microsecondsUnitKey string = "us"
+	millisecondsUnitKey string = "ms"
+	secondsUnitKey      string = "s"
+	minutesUnitKey      string = "m"
+	hoursUnitKey        string = "h"
+
+	daysToHoursKef   float64 = 24
+	weeksToHoursKef  float64 = 168  //24*7=168
+	monthsToHoursKef float64 = 720  //24*30=720
+	yearsToHoursKef  float64 = 8760 //24*365=8760
 )
 
 func GetAgeInNanoseconds(age string) (float64, error) {
 	var err error
-	numberAndTimeUnit := strings.SplitN(age, SPACE, 2)
+	numberAndTimeUnit := strings.SplitN(age, space, 2)
 
 	switch numberAndTimeUnit[1] {
-	case HUMAN_NANOSECONDS:
-		numberAndTimeUnit[1] = NANOSECONDS_UNIT_KEY
-	case HUMAN_MICROSECONDS:
-		numberAndTimeUnit[1] = MISCROSECONDS_UNIT_KEY
-	case HUMAN_MILISECONDS:
-		numberAndTimeUnit[1] = MILISECONDS_UNIT_KEY
-	case HUMAN_SECONDS:
-		numberAndTimeUnit[1] = SECONDS_UNIT_KEY
-	case HUMAN_MINUTES:
-		numberAndTimeUnit[1] = MINUTES_UNIT_KEY
-	case HUMAN_HOURS:
-		numberAndTimeUnit[1] = HOURS_UNIT_KEY
-	case HUMAN_DAYS:
-		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], DAYS_TO_HOURS_KEF)
-		numberAndTimeUnit[1] = HOURS_UNIT_KEY
-	case HUMAN_WEEKS:
-		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], WEEKS_TO_HOURS_KEF)
-		numberAndTimeUnit[1] = HOURS_UNIT_KEY
-	case HUMAN_MONTHS:
-		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], MONTHS_TO_HOURS_KEF)
-		numberAndTimeUnit[1] = HOURS_UNIT_KEY
-	case HUMAN_YEARS:
-		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], YEARS_TO_HOURS_KEF)
-		numberAndTimeUnit[1] = HOURS_UNIT_KEY
+	case humanNanoseconds:
+		numberAndTimeUnit[1] = nanosecondsUnitKey
+	case humanMicroseconds:
+		numberAndTimeUnit[1] = microsecondsUnitKey
+	case humanMilliseconds:
+		numberAndTimeUnit[1] = millisecondsUnitKey
+	case humanSeconds:
+		numberAndTimeUnit[1] = secondsUnitKey
+	case humanMinutes:
+		numberAndTimeUnit[1] = minutesUnitKey
+	case humanHours:
+		numberAndTimeUnit[1] = hoursUnitKey
+	case humanDays:
+		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], daysToHoursKef)
+		numberAndTimeUnit[1] = hoursUnitKey
+	case humanWeeks:
+		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], weeksToHoursKef)
+		numberAndTimeUnit[1] = hoursUnitKey
+	case humanMonths:
+		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], monthsToHoursKef)
+		numberAndTimeUnit[1] = hoursUnitKey
+	case humanYears:
+		numberAndTimeUnit[0], err = toDays(numberAndTimeUnit[0], yearsToHoursKef)
+		numberAndTimeUnit[1] = hoursUnitKey
 	default:
 		err = errors.New("can't parse time unit")
 	}

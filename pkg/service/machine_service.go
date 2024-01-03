@@ -8,7 +8,7 @@ import (
 
 // the values closer to 1 are considered Anomalous
 // and the values that are <0.5 are considered to be "normal"
-const NORMAL_SCORE float64 = 0.5
+const normalScore float64 = 0.5
 
 type MachineService struct {
 }
@@ -18,7 +18,7 @@ func NewMachineService() *MachineService {
 }
 
 // validate machines using Extended Isolation Forest algorithm
-// TODO Remove dublicate code
+// read about this algoithm here https://ieeexplore.ieee.org/document/8888179
 func (s *MachineService) ValidateMachines(machines []model.Machine) ([]model.Machine, error) {
 	var inputData [][]float64
 	var err error
@@ -40,7 +40,7 @@ func (s *MachineService) ValidateMachines(machines []model.Machine) ([]model.Mac
 			return nil, err
 		}
 
-		if f.Score([]float64{ageInNanoseconds}) >= NORMAL_SCORE {
+		if f.Score([]float64{ageInNanoseconds}) >= normalScore {
 			outlierMachines = append(outlierMachines, machine)
 		}
 	}
